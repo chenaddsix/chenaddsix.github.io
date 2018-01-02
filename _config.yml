@@ -8,14 +8,14 @@ keyword: ""
 #url: "https://fengzhao.me"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
-repository: fengzhao/github.fengzhao.io
+repository: chenaddsix/chenaddsix.github.io
 
 # SNS settings
 RSS: false
 weibo_username:     316111718
-zhihu_username:     fengzhao
-github_username:    fengzhao
-twitter_username:   chinafengzhao
+zhihu_username:     chenjiale
+github_username:    chenaddsix
+twitter_username:   chenaddsix
 
 # linkedin_username:  firstname-lastname-idxxxx
 
