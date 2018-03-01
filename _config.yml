@@ -1,11 +1,11 @@
 # Site settings
-title: ChenJiale Blog
-SEOTitle: 陈嘉乐的博客 | ChenJiale Blog
+title: Jiale Chen
+SEOTitle: 陈嘉乐的博客 | Jiale Chen Blog
 header-img: img/home-bg.jpg
 email: chenjlustc@163.com
 description: "Calm down and carry on."
 keyword: ""
-#url: "https://fengzhao.me"              # your host, for absolute URL
+#url: "https://chenaddsix.me"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 repository: chenaddsix/chenaddsix.github.io
@@ -82,11 +82,7 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 friends:
   [
   {
-        title: "Storm Zhang",
-        href: "http://stormzhang.com/"
+        title: "Chaway",
+        href: "https://chaway.github.io/"
     },
-  {
-        title: "Dandy Weng",
-        href: "https://www.dandyweng.com/"
-    }
 ]
