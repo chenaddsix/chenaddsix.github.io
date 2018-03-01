@@ -35,9 +35,6 @@ anchorjs: true                          # if you want to customize anchor. check
 # from PR#40, to support local preview for Jekyll 3.0
 gems: [jekyll-paginate]
 
-
-
-
 # Markdown settings
 # replace redcarpet to kramdown,
 # although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
@@ -46,14 +43,8 @@ markdown: kramdown
 kramdown:
 input: GFM                            # use Github Flavored Markdown !important
 
-
-
 # Disqus settings
 disqus_username: fengzhaoblog
-
-
-
-
 
 # Analytics settings
 # Baidu Analytics
@@ -63,20 +54,14 @@ disqus_username: fengzhaoblog
 ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
 ga_domain:
 
-
-
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "Calm down and carry on."
 sidebar-avatar: /img/23240204.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
-
-
 # Featured Tags
 featured-tags: true                     # whether or not using Feature-Tags
 featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
-
-
 
 # Friends
 friends:
