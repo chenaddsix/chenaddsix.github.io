@@ -47,7 +47,7 @@ $$ A = \frac{1}{2} (2A+B) - \frac{1}{2} B.  \quad \underline{ A=\sum_{i=1}^{n} \
 通过引入field的概念，FFM吧相同性质的特征归于同一个field。在FM开头one-hot编码中提到用于访问的channel，编码生成了10个数值型特征，这10个特征都是用于说明用户PV时对应的channel类别，因此可以将其放在同一个field中。那么，我们可以把同一个categorical特征经过one-hot编码生成的数值型特征都可以放在同一个field中。
 
 在FFM中，每一维特征$$x_i$$，针对其它特征的每一种”field” $$f_j$$，都会学习一个隐向量$$v_i,f_j$$。因此，隐向量不仅与特征相关，也与field相关。
-假设每条样本的n个特征属于$$f$$个field，那么FFM的二次项有$nf$个隐向量。而在FM模型中，每一维特征的隐向量只有一个。因此可以吧FM看作是FFM的特例，即把所有的特征都归属到一个field是的FFM模型。根据FFM的field敏感特性，可以导出其模型表达式： \\
+假设每条样本的n个特征属于$$f$$个field，那么FFM的二次项有$nf$个隐向量。而在FM模型中，每一维特征的隐向量只有一个。因此可以吧FM看作是FFM的特例，即把所有的特征都归属到一个field是的FFM模型。根据FFM的field敏感特性，可以导出其模型表达式： \
 
 $$
 \hat{y}(\mathbf{x}) := w_0 + \sum_{i=1}^{n} w_i x_i + \sum_{i=1}^{n} \sum_{j=i+1}^{n} \langle \mathbf{v}_{i,\,f_j}, \mathbf{v}_{j,\,f_i} \rangle x_i x_j \qquad(ffm)
@@ -55,15 +55,13 @@ $$
 
 其中，$$f_j$$是第$$j$$个特征所属的field。如果隐向量的长度为$$k$$，那么FFM的二交叉项参数就有$$nfk$$个，远多于FM模型的$$nk$$个。此外，由于隐向量与field相关，FFM的交叉项并不能够像FM那样做化简，其预测复杂度为$$O(kn^2)$$。
 
-> 给出一下输入数据：
+> 给出一下输入数据: 
 > User | Movie | Genre | Price
-> - | :-: | -: 
 > YuChin | 3Idiots | Comedy, Drama | $9.99
 > Price是数值型特征，实际应用中通常会把价格划分为若干个区间（即连续特征离散化），然后再one-hot编码，这里假设$9.99对应的离散化区间tag为”2”。当然不是所有的连续型特征都要做离散化，比如某广告位、某类广告／商品、抑或某类人群统计的历史CTR（pseudo－CTR）通常无需做离散化。
 >
 > 该条记录可以编码为5个数值特征，即User^YuChin, Movie^3Idiots, Genre^Comedy, Genre^Drama, Price^2。其中Genre^Comedy, Genre^Drama属于同一个field。为了说明FFM的样本格式，我们把所有的特征和对应的field映射成整数编号。
 > Field Name | Field Index | Feature Name | Feature Index
-> - | :-: | -: 
 > User | 1 | User^YuChin | 1
 > Movie | 2 | Movie^3Idiots | 2
 > Genre	3 | Genre^Comedy | 3
