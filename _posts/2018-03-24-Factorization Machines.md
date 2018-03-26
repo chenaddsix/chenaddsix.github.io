@@ -55,7 +55,7 @@ $$
 
 其中，$$f_j$$是第$$j$$个特征所属的field。如果隐向量的长度为$$k$$，那么FFM的二交叉项参数就有$$nfk$$个，远多于FM模型的$$nk$$个。此外，由于隐向量与field相关，FFM的交叉项并不能够像FM那样做化简，其预测复杂度为$$O(kn^2)$$。
 
-> 给出一下输入数据: 
+给出一下输入数据: 
 |User|Movie|Genre|Price|
 |:--------|---------:|:-------:|---------:|
 |YuChin | 3Idiots | Comedy, Drama | $9.99|
@@ -75,6 +75,8 @@ Yu-Chin Juan实现了一个C++版的FFM模型，源码可从Github下载。这�
 $$
 \phi(\mathbf{w}, \mathbf{x}) = \sum_{j_1, j_2 \in \mathcal{C}_2} \langle \mathbf{w}_{j_1, f_2}, \mathbf{w}_{j_2, f_1} \rangle x_{j_1} x_{j_2} \label{eq:phi}\tag{5}
 $$
-
-
-
+其中，$$C_2$$是非零特征的二元组合，$$j_1$$ 是特征，属于field $$f_1，w_{j1,f2}$$ 是特征 $$j_1$$ 对field $$f_2$$ 的隐向量。此FFM模型采用logistic loss作为损失函数，和L2惩罚项，因此只能用于二元分类问题。  
+$$
+\min_{\mathbf{w}} \sum_{i=1}^L \log \big( 1 + \exp\{ -y_i \phi (\mathbf{w}, \mathbf{x}_i ) \} \big) + \frac{\lambda}{2} \| \mathbf{w} \|^2
+$$
+其中，$$yi\in{−1,1}$$ 是第 $$i$$ 个样本的label，$$L$$ 是训练样本数量，$$\lambda$$ 是惩罚项系数。模型采用SGD优化，优化流程如下。
