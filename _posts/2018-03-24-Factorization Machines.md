@@ -83,5 +83,5 @@ $$
 $$
 \min_{\mathbf{w}} \sum_{i=1}^L \log \big( 1 + \exp\{ -y_i \phi (\mathbf{w}, \mathbf{x}_i ) \} \big) + \frac{\lambda}{2} \| \mathbf{w} \|^2
 $$
-其中，$$yi\in{−1,1}$$ 是第 $$i$$ 个样本的label，$$L$$ 是训练样本数量，$$\lambda$$ 是惩罚项系数。模型采用SGD优化，优化流程如下。
+其中，$$y_i\in\{−1,1\}$$ 是第 $$i$$ 个样本的label，$$L$$ 是训练样本数量，$$\lambda$$ 是惩罚项系数。模型采用SGD优化，优化流程如下。
 <center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/ffm_sgd.png?raw=true"  alt=" " /> </center>
