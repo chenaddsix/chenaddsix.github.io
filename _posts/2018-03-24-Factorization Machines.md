@@ -57,7 +57,7 @@ $$
 
 给出一下输入数据:  
 |User|Movie|Genre|Price|  
-|:--------|---------:|:-------:|---------:|  
+| ------- | -------- | ------- | -------- |  
 |YuChin | 3Idiots | Comedy, Drama | $9.99|
 Price是数值型特征，实际应用中通常会把价格划分为若干个区间（即连续特征离散化），然后再one-hot编码，这里假设$9.99对应的离散化区间tag为”2”。当然不是所有的连续型特征都要做离散化，比如某广告位、某类广告／商品、抑或某类人群统计的历史CTR（pseudo－CTR）通常无需做离散化。
 该条记录可以编码为5个数值特征，即User^YuChin, Movie^3Idiots, Genre^Comedy, Genre^Drama, Price^2。其中Genre^Comedy, Genre^Drama属于同一个field。为了说明FFM的样本格式，我们把所有的特征和对应的field映射成整数编号。
@@ -80,4 +80,4 @@ $$
 \min_{\mathbf{w}} \sum_{i=1}^L \log \big( 1 + \exp\{ -y_i \phi (\mathbf{w}, \mathbf{x}_i ) \} \big) + \frac{\lambda}{2} \| \mathbf{w} \|^2
 $$
 其中，$$yi\in{−1,1}$$ 是第 $$i$$ 个样本的label，$$L$$ 是训练样本数量，$$\lambda$$ 是惩罚项系数。模型采用SGD优化，优化流程如下。
-<center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/ffm_samples.png?raw=true"  alt=" " /> </center>
+<center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/ffm_sgd.png?raw=true"  alt=" " /> </center>
