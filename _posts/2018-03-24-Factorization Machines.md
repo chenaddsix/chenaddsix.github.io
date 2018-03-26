@@ -46,7 +46,7 @@ $$ A = \frac{1}{2} (2A+B) - \frac{1}{2} B.  \quad \underline{ A=\sum_{i=1}^{n} \
 
 通过引入field的概念，FFM吧相同性质的特征归于同一个field。在FM开头one-hot编码中提到用于访问的channel，编码生成了10个数值型特征，这10个特征都是用于说明用户PV时对应的channel类别，因此可以将其放在同一个field中。那么，我们可以把同一个categorical特征经过one-hot编码生成的数值型特征都可以放在同一个field中。
 
-在FFM中，每一维特征$x_i$，针对其它特征的每一种”field” $f_j$，都会学习一个隐向量$v_i,f_j$。因此，隐向量不仅与特征相关，也与field相关。
+在FFM中，每一维特征$$x_i$$，针对其它特征的每一种”field” $$f_j$$，都会学习一个隐向量$ v_i,f_j $。因此，隐向量不仅与特征相关，也与field相关。
 假设每条样本的n个特征属于$f$个field，那么FFM的二次项有$nf$个隐向量。而在FM模型中，每一维特征的隐向量只有一个。因此可以吧FM看作是FFM的特例，即把所有的特征都归属到一个field是的FFM模型。根据FFM的field敏感特性，可以导出其模型表达式：
 $$
 \hat{y}(\mathbf{x}) := w_0 + \sum_{i=1}^{n} w_i x_i + \sum_{i=1}^{n} \sum_{j=i+1}^{n} \langle \mathbf{v}_{i,\,f_j}, \mathbf{v}_{j,\,f_i} \rangle x_i x_j \qquad(ffm)
