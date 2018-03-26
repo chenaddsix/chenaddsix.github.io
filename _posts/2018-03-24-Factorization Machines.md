@@ -27,7 +27,7 @@ tags:
 <center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/FM7.png?raw=true"  alt=" " /> </center>
 
 解读第（1）步到第（2）步，这里用A表示系数矩阵V的上三角元素，B表示对角线上的交叉项系数。由于系数矩阵V是一个对称阵，所以下三角与上三角相等，有下式成立：
-$ A = \frac{1}{2} (2A+B) - \frac{1}{2} B.  \quad \underline{ A=\sum_{i=1}^{n} \sum_{j=i+1}^{n} {\langle \mathbf{v}_i, \mathbf{v}_j \rangle} x_i x_j } ; \quad \underline{ B = \frac{1}{2} \sum_{i=1}^{n} {\langle \mathbf{v}_i, \mathbf{v}_i \rangle} x_i x_i } \quad (n.ml.1.9.4) $
+$$A = \frac{1}{2} (2A+B) - \frac{1}{2} B.  \quad \underline{ A=\sum_{i=1}^{n} \sum_{j=i+1}^{n} {\langle \mathbf{v}_i, \mathbf{v}_j \rangle} x_i x_j } ; \quad \underline{ B = \frac{1}{2} \sum_{i=1}^{n} {\langle \mathbf{v}_i, \mathbf{v}_i \rangle} x_i x_i } \quad (n.ml.1.9.4)$$
 
 <center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/FM8.png?raw=true"  alt=" " /> </center>
 <center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/FM9.png?raw=true"  alt=" " /> </center>
