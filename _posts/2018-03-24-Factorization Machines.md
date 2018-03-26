@@ -62,5 +62,20 @@ $$
 > Price是数值型特征，实际应用中通常会把价格划分为若干个区间（即连续特征离散化），然后再one-hot编码，这里假设$9.99对应的离散化区间tag为”2”。当然不是所有的连续型特征都要做离散化，比如某广告位、某类广告／商品、抑或某类人群统计的历史CTR（pseudo－CTR）通常无需做离散化。
 >
 > 该条记录可以编码为5个数值特征，即User^YuChin, Movie^3Idiots, Genre^Comedy, Genre^Drama, Price^2。其中Genre^Comedy, Genre^Drama属于同一个field。为了说明FFM的样本格式，我们把所有的特征和对应的field映射成整数编号。
+> Field Name | Field Index | Feature Name | Feature Index
+> - | :-: | -: 
+> User | 1 | User^YuChin | 1
+> Movie | 2 | Movie^3Idiots | 2
+> Genre	3 | Genre^Comedy | 3
+> － |	－ | Genre^Drama | 4
+> Price | 4 | Price^2 | 5
+> 那么，FFM所有的（二阶）组合特征共有10项 $$\mathbf{C}_{5}^{2} = \frac{5 \times 4}{ 2!}= 10$$, 即为：
+> <center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/ffm_samples.png?raw=true"  alt=" " /> </center>
+
+Yu-Chin Juan实现了一个C++版的FFM模型，源码可从Github下载。这个版本的FFM省略了常数项和一次项，模型方程如下。
+$$
+\phi(\mathbf{w}, \mathbf{x}) = \sum_{j_1, j_2 \in \mathcal{C}_2} \langle \mathbf{w}_{j_1, f_2}, \mathbf{w}_{j_2, f_1} \rangle x_{j_1} x_{j_2} \label{eq:phi}\tag{5}
+$$
+
 
 
