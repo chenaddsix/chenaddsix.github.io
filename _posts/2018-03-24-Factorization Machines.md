@@ -14,6 +14,7 @@ tags:
 <center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/FM2.png?raw=true"  alt=" " /> </center>
 <center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/FM3.png?raw=true"  alt=" " /> </center>
 <center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/FM4.png?raw=true"  alt=" " /> </center>
+<center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/ffm_mf.png?raw=true", alt=" "/> </center>>
 <center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/FM5.png?raw=true"  alt=" " /> </center>
 <center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/FM6.png?raw=true"  alt=" " /> </center>
 <center> <img src="https://github.com/starfolder/MarkdownPic/blob/Razor_Atmel/FM7.png?raw=true"  alt=" " /> </center>
