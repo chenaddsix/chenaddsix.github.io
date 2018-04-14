@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Prioritied Experience Replay
-subtitle:   "\"Reinforcement-Learning.\""
+title: Prioritied
+subtitle:   "\"Prioritied Experience Replay.\""
 date: 2018-04-14
 header-img: "img/post-bg-2015.jpg"
 author: "Jiale Chen"
@@ -21,7 +21,6 @@ tags:
 Google提出的方法是利用了线段树的存储和查找方式。这个方法之前在数据结构中没有遇到，所以本文更多的笔墨会说明这种存储方式。
 先看算法的完整伪代码：
 
-<center> <img src="<https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Prioritied%20experience%20replay_1.png>"  alt=" " /> </center>
 
 
 
