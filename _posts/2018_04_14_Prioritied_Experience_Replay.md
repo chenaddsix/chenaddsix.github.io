@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Reinforcement Learning Algorithm 1:Prioritied Experience Replay
+title: Prioritied Experience Replay
 subtitle:   "\"Reinforcement-Learning.\""
 date: 2018-04-14
 header-img: "img/post-bg-2015.jpg"
