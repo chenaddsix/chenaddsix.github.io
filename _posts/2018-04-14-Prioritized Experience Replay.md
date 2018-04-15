@@ -74,13 +74,11 @@ $$
 
 以下是简单的线段树结点的C++结构体：
 
-```
-
+```c++
 struct treeNode {
 	Data data;              // 数据域  
 	treeNode *lson, *rson;  // 指针域  
 }*root;
-
 ```
 
 实际计算过程中，还有一种更加方便的表示方法，就是基于数组的静态表示法，需要一个全局的结构体数组，每个结点对应数组中的一个元素，利用下标索引。
@@ -95,10 +93,10 @@ struct treeNode {
 
 ```c++
 struct treeNode {
-	Data data;  // 数据域
-	int pid;    // 数组下标索引
-	int lson() { return pid << 1; }
-	int rson() { return pid<<1|1; }  // 利用位运算加速获取子结点编号
+	Data data;  // 数据域  
+	int pid;    // 数组下标索引  
+	int lson() { return pid << 1; }  
+	int rson() { return pid<<1|1; }  // 利用位运算加速获取子结点编号  
 }nodes[ MAXNODES ];
 ```
 
