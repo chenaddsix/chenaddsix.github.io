@@ -76,8 +76,8 @@ $$
 
 ```c++
 struct treeNode {
-	Data data;              // 数据域
-	treeNode *lson, *rson;  // 指针域
+	Data data;              // 数据域 \\
+	treeNode *lson, *rson;  // 指针域 \\
 }*root;
 ```
 
