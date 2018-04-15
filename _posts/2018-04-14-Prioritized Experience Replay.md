@@ -13,6 +13,7 @@ tags:
 <script type="text/javascript" async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
+1
 ### Algorithm
 为了构建自己的代码库，从本周开始每周实现一个到两个经典的强化学习算法，并做一定笔记对该算法进行记录。
 
@@ -73,8 +74,8 @@ $$
 以下是简单的线段树结点的C++结构体：
 ```c++
 struct treeNode {
-    Data data;              // 数据域
-    treeNode *lson, *rson;  // 指针域
+	Data data;              // 数据域
+	treeNode *lson, *rson;  // 指针域
 }*root;
 ```
 实际计算过程中，还有一种更加方便的表示方法，就是基于数组的静态表示法，需要一个全局的结构体数组，每个结点对应数组中的一个元素，利用下标索引。
@@ -89,10 +90,10 @@ struct treeNode {
 
 ```c++
 struct treeNode {
-    Data data;                         // 数据域
-    int pid;                           // 数组下标索引
-    int lson() { return pid << 1; }
-    int rson() { return pid<<1|1; }    // 利用位运算加速获取子结点编号
+	Data data;                         // 数据域 \
+	int pid;                           // 数组下标索引
+	int lson() { return pid << 1; }
+	int rson() { return pid<<1|1; }    // 利用位运算加速获取子结点编号
 }nodes[ MAXNODES ];
 ```
 
@@ -109,13 +110,13 @@ struct treeNode {
 
 ```c++
 void segtree_build(int p, int l, int r) {
-    nodes[p].reset(p, l, r);                    // 注释1
-    if (l &lt; r) {
-        int mid = (l + r) &gt;&gt; 1;
-        segtree_build(p&lt;&lt;1, l, mid);     // 注释2
-        segtree_build(p&lt;&lt;1|1, mid+1, r); // 注释3
-        nodes[p].updateFromSon();              // 注释4
-    }
+	nodes[p].reset(p, l, r);                    // 注释1
+	if (l &lt; r) {
+		int mid = (l + r)/2;
+		segtree_build(p<<1, l, mid);     // 注释2
+		segtree_build(p<<1|1, mid+1, r); // 注释3
+		nodes[p].updateFromSon();              // 注释4
+	}
 }
 ```
 注释1：初始化第p个结点的数据域，根据实际情况实现reset函数
@@ -131,18 +132,18 @@ void segtree_build(int p, int l, int r) {
 
 ```c++
 void segtree_insert(int p, int l, int r, int x, int y, ValueType val) {
-         if( !is_intersect(l, r, x, y) ) {                    // 注释1
-             return ;
-         }
-         if( is_contain(l, r, x, y) ) {                       // 注释2
-             nodes[p].updateByValue(val);                     // 注释3
-             return ;
-         }
-         nodes[p].giveLazyToSon();                            // 注释4
-                     int mid = (l + r) &gt;&gt; 1;
-         segtree_insert(p&lt;&lt;1, l, mid, x, y, val);       // 注释5
-         segtree_insert(p&lt;&lt;1|1, mid+1, r, x, y, val);   // 注释6
-         nodes[p].updateFromSon();                            // 注释7
+	if( !is_intersect(l, r, x, y) ) {                    // 注释1
+		return ;
+	}
+	if( is_contain(l, r, x, y) ) {                       // 注释2
+		nodes[p].updateByValue(val);                     // 注释3
+		return ;
+	}
+	nodes[p].giveLazyToSon();                            // 注释4
+	int mid = (l + r)/2;
+	segtree_insert(p<<1, l, mid, x, y, val);       // 注释5
+	segtree_insert(p<<1|1, mid+1, r, x, y, val);   // 注释6
+	nodes[p].updateFromSon();                            // 注释7
 }
 ```
 注释1：区间[l, r]和区间[x, y]无交集，直接返回
@@ -159,18 +160,18 @@ void segtree_insert(int p, int l, int r, int x, int y, ValueType val) {
 
 ```c++
 void segtree_query (int p, int l, int r, int x, int y, treeNode&amp; ans) {
-         if( !is_intersect(l, r, x, y) ) {
-                   return ;
-         }
-         if( is_contain(l, r, x, y) ) {
-             ans.mergeQuery(p);                          // 注释1
-             return;
-         }
-         nodes[p].giveLazyToSon();
-                     int mid = (l + r) &gt;&gt; 1;
-         segtree_query(p&lt;&lt;1, l, mid, x, y, ans);
-         segtree_query(p&lt;&lt;1|1, mid+1, r, x, y, ans);
-         nodes[p].updateFromSon();                       // 注释2
+	if( !is_intersect(l, r, x, y) ) {
+		return ;
+	}
+	if( is_contain(l, r, x, y) ) {
+		ans.mergeQuery(p);                          // 注释1
+		return;
+	}
+	nodes[p].giveLazyToSon();
+	int mid = (l + r)/2;
+	segtree_query(p<<1, l, mid, x, y, ans);
+	segtree_query(p<<1|1, mid+1, r, x, y, ans);
+	nodes[p].updateFromSon();                       // 注释2
 }
 ```
 注释1：更新当前解ans，会在第四节进行详细讨论
