@@ -91,10 +91,10 @@ struct treeNode {
 
 ```c++
 struct treeNode {
-	Data data;                         // 数据域 \
-	int pid;                           // 数组下标索引
+	Data data;  // 数据域
+	int pid;    // 数组下标索引
 	int lson() { return pid << 1; }
-	int rson() { return pid<<1|1; }    // 利用位运算加速获取子结点编号
+	int rson() { return pid<<1|1; }  // 利用位运算加速获取子结点编号
 }nodes[ MAXNODES ];
 ```
 
@@ -109,6 +109,7 @@ struct treeNode {
 线段树的构造是一个二分递归的过程，封装好了之后代码非常简洁，总体思路就是从区间[1, n]开始拆分，拆分方式为二分的形式，将左半区间分配给左子树，右半区间分配给右子树，继续递归构造左右子树。
 当区间拆分到单位区间时（即遍历到了线段树的叶子结点），则执行回溯。回溯时对于任何一个非叶子结点需要根据两棵子树的情况进行统计，计算当前结点的数据域。
 
+
 ```c++
 void segtree_build(int p, int l, int r) {
 	nodes[p].reset(p, l, r);                    // 注释1
@@ -120,6 +121,7 @@ void segtree_build(int p, int l, int r) {
 	}
 }
 ```
+
 注释1：初始化第p个结点的数据域，根据实际情况实现reset函数
 注释2：递归构造左子树
 注释3：递归构造右子树
@@ -134,11 +136,11 @@ void segtree_build(int p, int l, int r) {
 ```c++
 void segtree_insert(int p, int l, int r, int x, int y, ValueType val) {
 	if( !is_intersect(l, r, x, y) ) {                    // 注释1
-		return ;
+		return;
 	}
 	if( is_contain(l, r, x, y) ) {                       // 注释2
 		nodes[p].updateByValue(val);                     // 注释3
-		return ;
+		return;
 	}
 	nodes[p].giveLazyToSon();                            // 注释4
 	int mid = (l + r)/2;
@@ -147,6 +149,7 @@ void segtree_insert(int p, int l, int r, int x, int y, ValueType val) {
 	nodes[p].updateFromSon();                            // 注释7
 }
 ```
+
 注释1：区间[l, r]和区间[x, y]无交集，直接返回
 注释2：区间[x, y]完全覆盖[l, r]
 注释3：更新第p个结点的数据域
@@ -158,6 +161,7 @@ void segtree_insert(int p, int l, int r, int x, int y, ValueType val) {
 
 ##### 3、询问
 线段树的询问和更新类似，大部分代码都是一样的，只有红色部分是不同的，同样是将大区间[1, n]拆分成一个个小区间[l, r]，这里需要存储一个询问得到的结果ans，当询问区间[x, y]完全覆盖被拆分的区间[l, r]时，则用管辖[l, r]区间的结点的数据域来更新ans。
+
 
 ```c++
 void segtree_query (int p, int l, int r, int x, int y, treeNode&amp; ans) {
@@ -175,6 +179,7 @@ void segtree_query (int p, int l, int r, int x, int y, treeNode&amp; ans) {
 	nodes[p].updateFromSon();                       // 注释2
 }
 ```
+
 注释1：更新当前解ans，会在第四节进行详细讨论
 注释2：和更新一样的代码，不再累述
 
