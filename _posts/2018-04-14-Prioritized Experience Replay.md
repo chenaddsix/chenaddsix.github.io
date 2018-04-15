@@ -26,7 +26,7 @@ Google提出的方法是利用了线段树的存储和查找方式。这个方�
 
 (1) 首先可以注意到，本算法基于DQN做改进。对于第$$j$$个experience，被采样的概率为$$P(j) =\frac{p_j^\alpha}{\sum_i p_i^\alpha}$$，其中$$p_j>0$$为第$$j$$个样本的优先级(priority)，$$\alpha$$决定了TD-error作为优先级的程度，为$$[0,1]$$的小数。本文中采取了两种计算$$p_j$$的方法：
 
-- 其中一种是proportional prioritization：$$p_j=\left | \delta_j \right | +\epsilon$$，其中$$\delta$$为TD-error的绝对值，$$\epsilon$$为一个很小正数，防止某些TD-error很小的experience很少被采样。
+- 其中一种是proportional prioritization：$$p_j= \| \delta_j \| +\epsilon$$，其中$$\delta$$为TD-error的绝对值，$$\epsilon$$为一个很小正数，防止某些TD-error很小的experience很少被采样。
 
 - 另一种是rank-based prioritization：$$p_j=\frac{1}{rank(j)}$$。$$rank(j)$$为第$$j$$个experience的TD-error在memory中的排序位置。
 实验证明前者更佳。
