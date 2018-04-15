@@ -92,6 +92,7 @@ struct treeNode {
 这种存储方式可以不用存子结点指针，取而代之的是当前结点的数组下标索引，以下是数组存储方式的线段树结点的C++结构体：
 
 ```c++
+
 struct treeNode {
 	Data data;  // 数据域  
 	int pid;    // 数组下标索引  
