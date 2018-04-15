@@ -89,10 +89,10 @@ struct treeNode {
 
 ```c++
 struct treeNode {
-         Data data;                         // 数据域
-         int pid;                           // 数组下标索引
-         int lson() { return pid << 1; }
-         int rson() { return pid<<1|1; }    // 利用位运算加速获取子结点编号
+    Data data;                         // 数据域
+    int pid;                           // 数组下标索引
+    int lson() { return pid << 1; }
+    int rson() { return pid<<1|1; }    // 利用位运算加速获取子结点编号
 }nodes[ MAXNODES ];
 ```
 
@@ -109,13 +109,13 @@ struct treeNode {
 
 ```c++
 void segtree_build(int p, int l, int r) {
-         nodes[p].reset(p, l, r);                    // 注释1
-         if (l &lt; r) {
-             int mid = (l + r) &gt;&gt; 1;
-             segtree_build(p&lt;&lt;1, l, mid);     // 注释2
-             segtree_build(p&lt;&lt;1|1, mid+1, r); // 注释3
-             nodes[p].updateFromSon();              // 注释4
-         }
+    nodes[p].reset(p, l, r);                    // 注释1
+    if (l &lt; r) {
+        int mid = (l + r) &gt;&gt; 1;
+        segtree_build(p&lt;&lt;1, l, mid);     // 注释2
+        segtree_build(p&lt;&lt;1|1, mid+1, r); // 注释3
+        nodes[p].updateFromSon();              // 注释4
+    }
 }
 ```
 注释1：初始化第p个结点的数据域，根据实际情况实现reset函数
