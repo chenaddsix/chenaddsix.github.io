@@ -135,7 +135,7 @@ void segtree_build(int p, int l, int r) {
 
 更新过程采用二分，将[1, n]区间不断拆分成一个个子区间[l, r]，当更新区间[x, y]完全覆盖被拆分的区间[l, r]时，则更新管辖[l, r]区间的结点的数据域。
 
-```c++
+```
 void segtree_insert(int p, int l, int r, int x, int y, ValueType val) {
 	if( !is_intersect(l, r, x, y) ) {                    // 注释1
 		return;
@@ -165,7 +165,7 @@ void segtree_insert(int p, int l, int r, int x, int y, ValueType val) {
 线段树的询问和更新类似，大部分代码都是一样的，只有红色部分是不同的，同样是将大区间[1, n]拆分成一个个小区间[l, r]，这里需要存储一个询问得到的结果ans，当询问区间[x, y]完全覆盖被拆分的区间[l, r]时，则用管辖[l, r]区间的结点的数据域来更新ans。
 
 
-```c++
+```
 void segtree_query (int p, int l, int r, int x, int y, treeNode&amp; ans) {
 	if( !is_intersect(l, r, x, y) ) {
 		return ;
