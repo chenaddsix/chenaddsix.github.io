@@ -74,10 +74,10 @@ $$
 
 以下是简单的线段树结点的C++结构体：
 
-```
-struct treeNode {
-	Data data;              // 数据域  
-	treeNode *lson, *rson;  // 指针域  
+```c++
+struct treeNode {	
+	Data data;              // 数据域	
+	treeNode *lson, *rson;  // 指针域	
 }*root;
 ```
 
