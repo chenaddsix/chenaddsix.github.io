@@ -26,7 +26,7 @@ Google提出的方法是利用了线段树的存储和查找方式。这个方�
 
 (1) 首先可以注意到，本算法基于DQN做改进。对于第$$j$$个experience，被采样的概率为$$P(j) =\frac{p_j^\alpha}{\sum_i p_i^\alpha}$$，其中$$p_j>0$$为第$$j$$个样本的优先级(priority)，$$\alpha$$决定了TD-error作为优先级的程度，为$$[0,1]$$的小数。本文中采取了两种计算$$p_j$$的方法：
 
-- 其中一种是proportional prioritization：$$p_j=|\delta_j|+\epsilon$$，其中$$\delta$$为TD-error的绝对值，$$\epsilon$$为一个很小正数，防止某些TD-error很小的experience很少被采样。
+- 其中一种是proportional prioritization：$$p_j=\left | \delta_j \right | +\epsilon$$，其中$$\delta$$为TD-error的绝对值，$$\epsilon$$为一个很小正数，防止某些TD-error很小的experience很少被采样。
 
 - 另一种是rank-based prioritization：$$p_j=\frac{1}{rank(j)}$$。$$rank(j)$$为第$$j$$个experience的TD-error在memory中的排序位置。
 实验证明前者更佳。
@@ -73,12 +73,14 @@ $$
 接下来讨论一下结点的表示法，每个结点可以看成是一个结构体指针，由数据域和指针域组成，其中指针域有两个，分别为左儿子指针和右儿子指针，分别指向左右子树；数据域存储对应数据，根据情况而定(如果是求区间最值，就存最值max；求区间和就存和sum)，这样就可以利用指针从根结点进行深度优先遍历了。
 
 以下是简单的线段树结点的C++结构体：
+
 ```c++
 struct treeNode {
 	Data data;              // 数据域
 	treeNode *lson, *rson;  // 指针域
 }*root;
 ```
+
 实际计算过程中，还有一种更加方便的表示方法，就是基于数组的静态表示法，需要一个全局的结构体数组，每个结点对应数组中的一个元素，利用下标索引。
 
 例如，假设某个结点在数组中下标为$$p$$，那么它的左儿子结点的下标就是$$2*p$$，右儿子结点的下标就是$$2*p+1$$(类似于一般数据结构书上说的堆在数组中的编号方式)，这样可以将所有的线段树结点存储在相对连续的空间内。之所以说是相对连续的空间，是因为有些下标可能永远用不到。
