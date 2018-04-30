@@ -143,5 +143,95 @@ $$
 
 
 
-<div align=center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_12.png"  alt=" " width="50%"/>  </div>
-<div align=center>Fig 8. The comparision of the prototypes. </div>
+<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_12.png"  alt=" " width="50%"/>  </center>
+<center>Fig 8. The comparision of the prototypes. </center>
+
+### Reinforcement Learning
+
+强化学习领域最大的问题是训练难度大，目前在不同强化学习问题上都需要重新训练网络，这为强化学习投入实际应用，例如无人驾驶等需要快速适应的场景带来难度，而元学习在快速学习方面有独特的优势，所以近年开始出现元学习与强化学习的结合。
+
+##### Multitask Actor-Mimic Network
+
+16年ICLR上[9]从网络优化目标的角度，希望一个agent能够学习多个学习任务的策略，即学习不同任务之间的共通点。首先，对于第$i$个任务$E_i$的policy objective为如下形式：
+
+$$
+L^i_{policy}(\theta)=\sum_{a\in A_{E_i}} \pi_{E_i}(a|s)log \pi_{AMN}(a|s;\theta)
+$$
+
+其中$\pi_{AMN}(a|s;\theta)$为Multitask Actor-Mimic Network的策略，这个$\theta$为学习多任务共通性的参数。
+
+另外一个部分是对于不同任务的适应网络，其中$h_{AMN}$和$h_{E_i}$是全连接网络的输出，对于第$i$个任务由网络$f_i$来学习$\theta$到$\theta_i$的映射，$\theta_i$是第$i$个任务的参数。
+
+$$
+L^i_{FeatureRegression}(\theta,\theta_{f_i})=\left \| f_i(h_{AMN}(s;\theta);\theta_{f_i})-h_{E_i}(s) \right \|_2^2
+$$
+
+通过这种方式，迫使$\theta$学习到不同任务之间的共通性，加快强化学习在不同任务上的训练。
+
+##### The Family of Tasks
+
+不同于[9]，DeepMind的一篇工作[19]旨在解决某类类似的强化学习问题。论文出发点是近年来循环卷积网络在meta learning领域有比较多的应用，也取得不错的效果，作者希望能把这种模式应用到强化学习上。
+
+作者对于在A3C算法上进行了实验，实验的环境比较简单，主要是老虎机问题和迷宫环境。
+
+作者的改进主要有三点：
+
+- 将meta learning的循环卷积网络用强化学习训练； (其实之前也有类似网络用于强化学习)
+- 构造了一个有相关任务的训练集；
+- 将action,reward也用于网络输入，如下图：
+
+<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_15.png"  alt=" " width="70%"/>  </center>
+<center>Fig 9. The network architecture of A3C in [19]. </center>
+
+##### Nonstationary Environment
+
+强化学习一般都是针对某特定环境训练一个策略模型，而实际应用中有很多环境在随时间改变的情况，即Nonstationary Environment。18ICLR上openai的论文[8]利用meta learning解决在非静态环境和竞争环境上的强化学习问题，并获得了best paper。在非静态环境上应用强化学习主要的难点是非静态环境不能像静态环境一样提供充足的样本供强化学习训练，所以强化学习模型必须迅速适应环境变化，而[4]在强化学习优化上已经做了一定的改进，[8]将MAML框架扩展到连续变化的环境上，如下图所示，(a)是MAML的结构，MAML只对第一步做更新，(b)为作者的模型，可以看出策略和任务都是连续变化的。
+
+<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_14.png"  alt=" " width="70%"/>  </center>
+
+作者将强化学习的reward取反作为MAML中的loss function $L_T(\tau):=-\sum_{t=1}^H R_t$，在连续非静态环境中，问题转化为优化：
+
+$$
+min_{\theta}\mathbb{E}_{P(T_0),P(T_{i+1}|T_i)}[\sum_{i=1}^{L}L_{T_i,T_{i+1}}(\theta)]
+$$
+其中
+$$
+L_{T_i,T_{i+1}}(\theta):=\mathbb{E}_{\tau_i \sim P_{T_i}}[\mathbb{E}_{\tau_{i+1}\sim P_{T_{i+1}}}[L_{T_{i+1}}(\tau_{i+1})|\tau_i,\theta]]
+$$
+
+$\tau_i$由$\theta$为参数的策略决定，$\tau_{i+1}$由$\phi$为参数的策略决定。
+
+这个Loss function可由policy gradient优化，所以策略更新可写为如下形式：
+
+$$
+\phi_i^m := \phi_i^{m-1} - \alpha_m \nabla_{\phi_i^{m-1}}L_{T_i}(\tau_{i,\phi_i^{m-1}}),m=1,\cdots,M-1
+$$
+而$\phi_i^0 := \theta$，实际上，在训练中，作者每一步使用的都是$\theta$，原因是有利于收敛，具体算法如下：
+
+<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_13.png"  alt=" " width="70%"/>  </center>
+
+可以看出算法的目标是学习最优的初始化策略参数$\theta^*$和做某非静态环境下的$\alpha^*$，而在执行阶段，是通过检测是否有新的任务到来决定是否转化策略的，也就是说对于环境的变化仍然由作者控制的，$\theta*,\alpha*$为某种特定变化下的最优，而不是自适应得对所有的环境变化作出反应。
+
+综上，强化学习因为训练样本需求大，而meta learning在解决小样本训练上有显著的成功，所以考虑将两者结合，但是目前强化学习与meta learning结合还处于起步阶段，都在gym环境或者自己定义的简单环境上进行测试。强化学习与meta learning结合主要有三种任务：(1)对于任意强化学习；(2)对于同一个任务设置不同参数，构造一个任务簇；(3)动态环境或者竞争环境。结合的基本思想也是迫使强化学习agent的权值不要在一个任务上拟合，而是拟合到一个在更多任务上有泛化能力的权值上。
+
+### Reference
+1.[Matching Networks for One Shot Learning](https://arxiv.org/abs/1606.04080) [[code1](https://github.com/gitabcworld/MatchingNetworks),[code2](https://github.com/AntreasAntoniou/MatchingNetworks)]
+2.[Prototypical Networks for Few-shot Learning](https://arxiv.org/abs/1703.05175) [[code](https://github.com/orobix/Prototypical-Networks-for-Few-shot-Learning-PyTorch)]
+3.[Learning to learn by gradient descent by gradient descent](https://arxiv.org/abs/1606.04474)
+4.[Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks](https://arxiv.org/abs/1703.03400) [[code1](https://github.com/cbfinn/maml),[code2](https://github.com/cbfinn/maml_rl)]
+5.[Meta-Learning with Memory-Augmented Neural Networks](http://proceedings.mlr.press/v48/santoro16.html)[[code](https://github.com/ywatanabex/ntm-meta-learning)]
+6.[Learning to Remember Rare Events](https://arxiv.org/abs/1703.03129) [[code1](https://github.com/mveres01/Theano-LtRRE),[code2](https://github.com/himani-arora/learning_to_remember_rare_events)]
+7.[Meta-Learning for Semi-Supervised Few-Shot Classification](https://arxiv.org/abs/1803.00676)
+8.[Continuous Adaptation via Meta-Learning in Nonstationary and Competitive Environments](https://arxiv.org/abs/1710.03641)
+9.[Actor-Mimic: Deep Multitask and Transfer Reinforcement Learning](https://arxiv.org/abs/1511.06342)
+10.[Meta Reinforcement Learning with Latent Variable Gaussian Processes](https://arxiv.org/abs/1803.07551)
+11.[Learning Neural Network Policies with Guided Policy Search under Unknown Dynamics](https://papers.nips.cc/paper/5444-learning-neural-network-policies-with-guided-policy-search-under-unknown-dynamics)
+12.[Learning to Optimize](https://arxiv.org/abs/1606.01885)
+13.[Using Fast Weights to Attend to the Recent Past](https://arxiv.org/abs/1610.06258)
+14.[HyperNetworks](https://arxiv.org/abs/1609.09106)
+15.[Optimization as a Model for Few-Shot Learning](http://pdfs.semanticscholar.org/149b/d70a173b24eba3f6514a7e587bda815ec7f0.pdf) [[code](https://github.com/gitabcworld/FewShotLearning)]
+16.[Siamese neural networks for one-shot image recognition](https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf)
+17.[Neural Turing Machines](https://arxiv.org/abs/1410.5401)
+18.[Low-shot Visual Recognition by Shrinking and Hallucinating Features](https://arxiv.org/abs/1606.02819)
+19.[Learning to reinforcement learn](https://arxiv.org/abs/1611.05763)[[code](https://github.com/awjuliani/Meta-RL)]
+20.[GitHub - floodsung/Meta-Learning-Papers: Meta Learning / Learning to Learn / One Shot Learning / Few Shot Learning](https://github.com/floodsung/Meta-Learning-Papers)
