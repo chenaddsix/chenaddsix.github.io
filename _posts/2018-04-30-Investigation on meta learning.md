@@ -27,11 +27,12 @@ Meta Learning的实现方法并不单一，只要是具有快速学习功能的�
 ##### Siamese Neural Network
 
 比较早的工作是15年NIPS的 Siamese neural network[16]，如Fig 1所示，输入分为两个部分，其中一个输入是support set中的数据，另外一个是要测试的数据，最后输出两个输入是同一个类型的概率，遍历所有support set后，概率大的为预测类型。
-<div align=center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_2.png"  alt=" " width="50%"/> </div>
-<div align=center>Fig 1. Siamese neural network</div>
+ 
+ <center><<img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_2.png"  alt=" "  width="50%"/> </center>
+<center>Fig 1. Siamese neural network</center>
 
-<div align=center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_1.png"  alt=" " width="70%"/>  </div>
-<div align=center>Fig 2. Training and Testing strategy </div>
+<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_1.png"  alt=" " width="70%"/>  </center>
+<center>Fig 2. Training and Testing strategy </center>
 
 Siamese neural network较早得提出了在feature map层面对比图片来提升few-shot问题的性能，比较的功能也是由网络学习获得的。
 
