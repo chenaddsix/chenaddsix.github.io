@@ -2,7 +2,7 @@
 layout: post
 title: Investigation on Meta Learning
 subtitle:   "\"Investigation on Meta Learning.\""
-date: 2018-04-14
+date: 2018-04-30
 header-img: "img/post-bg-2015.jpg"
 author: "Jiale Chen"
 catalog: true
@@ -12,6 +12,7 @@ tags:
 
 <script type="text/javascript" async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 
 由于最近科研任务需要，开始关注meta learning的研究进展，发现内容繁多，方法也很多，所以写一篇调研报告帮助梳理思路。
 
