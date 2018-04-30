@@ -27,8 +27,7 @@ Meta Learning的实现方法并不单一，只要是具有快速学习功能的�
 ##### Siamese Neural Network
 
 比较早的工作是15年NIPS的 Siamese neural network[16]，如Fig 1所示，输入分为两个部分，其中一个输入是support set中的数据，另外一个是要测试的数据，最后输出两个输入是同一个类型的概率，遍历所有support set后，概率大的为预测类型。
- 
- <center><img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_2.png"  alt=" "  width="50%"/> </center>
+<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_2.png"  alt=" " width="50%"/> </center>
 <center>Fig 1. Siamese neural network</center>
 
 <center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_1.png"  alt=" " width="70%"/>  </center>
@@ -44,22 +43,22 @@ Siamese neural network较早得提出了在feature map层面对比图片来提�
 
 他们把问题建模成：
 
-$$$$
+$$
 \hat{y}=\sum_{i=1}^{k}a(\hat{x},x_i)y_i
-$$$$
+$$
 
-其中$$S= \{ (x_i, y_i) \}_{i=1}^k$$为support set，$$a$$为attension机制。
+其中$S= \{ (x_i, y_i) \}_{i=1}^k$为support set，$a$为attension机制。
 
-这里的attention机制是先将输入$$\hat{x}$$与support set的$$x$$分别做embeding（分别用$$f,g$$表示），然后计算cosine distance $$c$$，再输入到softmax中归一化到0-1，即下式所示：
+这里的attention机制是先将输入$\hat{x}$与support set的$x$分别做embeding（分别用$f,g$表示），然后计算cosine distance $c$，再输入到softmax中归一化到0-1，即下式所示：
 
-$$$$
+$$
 a(x,\hat{x})=\frac{e^{c(f(\hat{x}),g(x))}}{\sum_{j=1}^{k} e^{c(f(\hat{x}),g(x))}}
-$$$$
+$$
 
-attention机制可以理解为最终对于距离$$\hat{x}$$的$$x$$的响应会更多得被考虑，那么这样embeding操作就决定了最后attention机制的响应。作者认为对于单个样本$$x,\hat{x}$$的embeding都应该考虑support set $$S$$的情况。所以$$f(\hat{x}),g(x)$$修改为$$f(\hat{x},S),g(x,S)$$。
+attention机制可以理解为最终对于距离$\hat{x}$的$x$的响应会更多得被考虑，那么这样embeding操作就决定了最后attention机制的响应。作者认为对于单个样本$x,\hat{x}$的embeding都应该考虑support set $S$的情况。所以$f(\hat{x}),g(x)$修改为$f(\hat{x},S),g(x,S)$。
 
-- 对于$$g(x,S)$$，作者将support set中的样本看作一个序列，利用BiLSTM作为embeding的网络结构，对每一个$$x_i$$进行编码。
-- 对于$$f(\hat{x},S)$$，作者利用一个带有attention的LSTM结构（具体细节看论文Appendix）
+- 对于$g(x,S)$，作者将support set中的样本看作一个序列，利用BiLSTM作为embeding的网络结构，对每一个$x_i$进行编码。
+- 对于$f(\hat{x},S)$，作者利用一个带有attention的LSTM结构（具体细节看论文Appendix）
 
 这种embeding使得网络能够忽视一些不重要的类别，在性能上也得到了很大的提升，也是该领域Matching网络的基础。
 
@@ -70,7 +69,7 @@ attention机制可以理解为最终对于距离$$\hat{x}$$的$$x$$的响应会�
 <center>Fig 3. Prototypical Network on few-shot and zero-shot scenarios </center>
 
 伪代码如下：
-代码中的$$d$$采用了Bregman divergence，实验证明效果优于cosine distance。
+代码中的$d$采用了Bregman divergence，实验证明效果优于cosine distance。
 <center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_4.png"  alt=" " width="80%"/>  </center>
 
 ### Gradient Descent
@@ -85,7 +84,7 @@ attention机制可以理解为最终对于距离$$\hat{x}$$的$$x$$的响应会�
 
 如Fig 4所示，作者训练了一个两层的LSTM的优化器，输入是网络参数在Loss Function上梯度，然后Optimizer输出网络参数的增量。具体如Fig 5所示，这样其实相当于将learner的learning rate也省去了，直接学习对每个参数的数值。从实验结果上看，这样的方法甚至超过了例如adam,rmsprop等常用的优化器。另外类似的工作是17NIPS的hypernetwork[14]，方法也是用一个网络产生另外一个网络的权值，同时实验了CNN和RNN在meta learning上的效果。
 
-而[15]将这样的框架应用到了few shot问题中并取得了不错的效果。具体算法如下，论文的使用的meta learning算法与[3]类似，同样是训练一个meta learner和一个用于分类的learner网络，不同之处是[15]把这种框架在few shot问题上做了扩展，算法的优化目标是得到一个对于few shot问题最优的meta learner，即最优的$$\Theta$$参数
+而[15]将这样的框架应用到了few shot问题中并取得了不错的效果。具体算法如下，论文的使用的meta learning算法与[3]类似，同样是训练一个meta learner和一个用于分类的learner网络，不同之处是[15]把这种框架在few shot问题上做了扩展，算法的优化目标是得到一个对于few shot问题最优的meta learner，即最优的$\Theta$参数
 
 <center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_11.png"  alt=" " width="70%"/>  </center>
 
@@ -93,17 +92,17 @@ attention机制可以理解为最终对于距离$$\hat{x}$$的$$x$$的响应会�
 
 <center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_10.png"  alt=" " width="70%"/>  </center>
 
-作者将优化问题看作一个马尔可夫过程，并建模了优化问题一般的形式，把问题转化为学习一个优化策略$$\pi(f,\{x^{(0)},\cdots,x^{(i-1)}\})=-\gamma \nabla f(x^{(i-1)})$$，策略网络的输出即梯度下降的结果，也就是learner网络参数的增量。
+作者将优化问题看作一个马尔可夫过程，并建模了优化问题一般的形式，把问题转化为学习一个优化策略$\pi(f,\{x^{(0)},\cdots,x^{(i-1)}\})=-\gamma \nabla f(x^{(i-1)})$，策略网络的输出即梯度下降的结果，也就是learner网络参数的增量。
 
-除了上述meta learner和learner这种两个网络的模型，在17年ICML上UC Berkeley提出一种免模型的meta learning方法[4]，该方法不需要一个meta learner来指导learner的更新，他们的出发点是学习一个对于各种同类型任务都非常敏感的参数模型$$\theta$$，在这样一种参数情况下，对于任意任务的Loss Function都能很快收敛，可以认为是学习一个对于特定问题的最优网络初始化。具体算法如下：
+除了上述meta learner和learner这种两个网络的模型，在17年ICML上UC Berkeley提出一种免模型的meta learning方法[4]，该方法不需要一个meta learner来指导learner的更新，他们的出发点是学习一个对于各种同类型任务都非常敏感的参数模型$\theta$，在这样一种参数情况下，对于任意任务的Loss Function都能很快收敛，可以认为是学习一个对于特定问题的最优网络初始化。具体算法如下：
 
 <center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_7.png"  alt=" " width="50%"/>  </center>
 
-该算法的思想是学习一个对于各种同质任务很敏感的初始化网络参数$$\theta$$，如Fig 6所示。这个网络参数可以在任意Loss Function的第一次迭代中快速收敛。算法流程：
+该算法的思想是学习一个对于各种同质任务很敏感的初始化网络参数$\theta$，如Fig 6所示。这个网络参数可以在任意Loss Function的第一次迭代中快速收敛。算法流程：
 
-- 首次构建一个同质任务的任务库$$T$$，可以理解为meta learning的数据集，用于后面采样。
-- 然后中这些任务上做单次更新得到$${\theta}'$$并记录。
-- 最后通过$${\theta}'$$计算meta learning的Loss Function，更新初始化参数$$\theta$$。
+- 首次构建一个同质任务的任务库$T$，可以理解为meta learning的数据集，用于后面采样。
+- 然后中这些任务上做单次更新得到${\theta}'$并记录。
+- 最后通过${\theta}'$计算meta learning的Loss Function，更新初始化参数$\theta$。
 
 <center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_8.png"  alt=" " width="50%"/>  </center>
 <center>Fig 6. Diagram of MAML. </center>
