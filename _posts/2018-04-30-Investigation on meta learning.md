@@ -109,3 +109,77 @@ attention机制可以理解为最终对于距离$$\hat{x}$$的$$x$$的响应会�
 <center>Fig 6. Diagram of MAML. </center>
 
 目前在meta learning领域最流行的框架就是一个meta learner和一个learner的模型，这样的结构相当于生成网络参数，这种结构优点是对于网络的每一个权值都能自适应一个特定的更新增量，但这种结构的对于很深的大规模网络需要训练很多meta learner，训练复杂度高。而[12]的方法在一定程度上解决了这个问题。这几篇论文的测试数据集都有不同，所以暂时没有性能对比。
+
+### Memory-Augmented Network
+
+Meta Learning领域一种基于记忆增强神经网络的方法，这种方法通过加入可读写的外部存储器层，实现用极少量新观测数据就能有效对模型进行调整，从而快速获得识别未见过的目标类别的meta-learning能力，也就是可以利用极少量样本学习。
+
+[5]将这种记忆增强神经网络[18]用到了meta learning的领域，并提出了新的存储读写更新策略——LRUS(Least Recently Used Access)，每次写操作只选择最少被用到的存储位置或者最近被用的存储位置。这样的策略完全由内容决定，不依赖于存储的位置。
+
+这种方式能够起作用的原因是网络的记忆功能用一个外部存储来代替，迫使网络去学习一些high-level的信息。
+
+另外一篇很重要的记忆增强神经网络的论文[6]获得了17ICLR的oral，作者是李飞飞的学生。作者提出了一种用于深度学习的大规模终身记忆模块，利用了快速最近邻算法加快了查询效率。一个新的样本出现，先在memory中找到最近邻特征，如果类别不同，就在存放最久的样本中随机选取一个位置存放新的样本特征，因为这个样本更加rare；如果类别相同，则合并两个特征。具体做法如Fig 7。
+
+<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_9.png"  alt=" " width="70%"/>  </center>
+<center>Fig 7. The operation of the memory module on a query q with correct value v. </center>
+
+综上，[5]是记忆增强网络这few shot问题上的首次应用，论文创新性很高，直接将网络的记忆功能用一个可查询的存储结构代替。[6]在这个基础上对速度，匹配方法做了改进。这种方法的优势是可解释性比较强，网络的记忆部分不再只由LSTM的参数拟合，但缺点就是维护一个很大的memory在某些问题上成本很高，对速度要求高的场景也很难适应。
+
+### Semi-Supervised Learning
+元学习以上解决的问题都为监督学习的问题，也就是测试集的样本类型，在训练集中都出现过。而18ICLR上的一篇论文[7]在Prototypical Network[2]的基础上做了改进，提出了从训练集中未打标签的数据上学习prototype。
+
+论文中训练集合分为$(S,R)$，分别表示标注数据集和未标注数据集。有标注样本为$x_i$，无标注样本为$\tilde{x_i}$，类别中心记为$p_c$，特征提取网络为$h(x)$。
+在[2]中，测试样本类别在训练集中肯定出现过，所以可以定义：
+
+$$
+p_c=\frac{\sum_i h(x_i) z_{i,c}}{\sum_i z_{i,c}},z_{i,c}=\mathbb{I}(y_i=c)
+$$
+
+但在半监督问题里面并不是所有测试类别都在训练集中出现过，因此基于聚类的思想，作者提出了三种聚类方式来利用未标注数据。
+
+- **soft K-Means**
+在[2]中其实可以看作计算所有同类别的中心，那么对于未标注数据并未利用，如下图。所以作者利用以下公式，将未标注数据也纳入考虑。
+
+$$
+p_c=\frac{\sum_i h(x_i) z_{i,c} + \sum_j h(\tilde{x}_j) \tilde{z}_{j,c}}{\sum_i z_{i,c}+\sum_j \tilde{z}_{j,c}}, \tilde{z}_{i,c}=\frac{exp(-\left \| h(\tilde{x}_j)-p_c \right \|_2^2)}{\sum_{{c}'} exp(-\left \| h(\tilde{x}_j)-p_{{c}'} \right \|_2^2)}
+$$
+
+<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_12.png"  alt=" " width="50%"/>  </center>
+<center>Fig 8. The comparision of the prototypes. </center>
+
+- **soft K-Means with cluster**
+soft k-means虽然将未标注数据也利用上了，但是未标注的数据类别并不一定存在于训练数据类别中，我们称这种类别为distractor class，那么按照soft k-means的做法就会污染其他正确类别的中心估计。为了处理这种情况，作者认为distractor class类别中心始终在原点：
+
+$$
+p_c=\begin{cases}\frac{\sum_i h(x_i)z_{i,c}}{\sum_i z_{i,c}} & \text{for }c=1...N\\0 & \text{for }c=N+1\end{cases}
+$$
+
+此外再考虑引进类别半径表示类内样本的不一致性（为了方便起见，标注类别半径$r_{1,\cdots,N}=1$，只学习无标注样本类别半径$r_{N+1}$。
+
+$$
+\widetilde{z}_{j,c}=\frac{exp(-\frac{1}{r_c^2}||\widetilde{x}_j-p_c||^2_2-A(r_c))}{\sum_{c'}exp(-\frac{1}{r_{c'}^2}||\widetilde{x}_j-p_{c'}||^2_2-A(r_{c'}))}, \text{where }A(r)=\frac{1}{2}log(2\pi)+log(r)
+$$
+
+- **masked soft K-Means**
+
+在soft K-Means with cluster中，所有的distractor class都被看作同一类，这显然是不合理的，作者利用了mask的思想，也就是说未标注数据对于不同类别的中心计算贡献应该有所区别，而这个区别作者利用一个全连接网络来学习。
+
+定义样本$\tilde{x}_j$到类别$c$的距离：
+
+$$
+\widetilde{d}_{j,c}=\frac{d_{j,c}}{\frac{1}{M}\sum_j d_{j,c}}, \text{where }d_{j,c}=||h(\widetilde{x}_j)-p_c||^2_2
+$$
+
+另外再用MLP学习两个阈值$\beta_c,\gamma_c$
+
+$$
+[\beta_c,\gamma_c]=MLP\left(\left[min_j(\widetilde{d}_{j,c}),max_j(\widetilde{d}_{j,c}), var_j(\widetilde{d}_{j,c}),skew_j(\widetilde{d}_{j,c}),kurt_j(\widetilde{d}_{j,c})\right]\right)
+$$
+
+然后是聚类中心的更新公式：
+
+$$
+\widetilde{p}_c=\frac{\sum_i h(x_i)z_{i,c}+\sum_j h(\widetilde{x}_j)\widetilde{z}_{j,c}m_{j,c}}{\sum_i z_{i,c}+\sum_j\widetilde{z}_{j,c}m_{j,c}},\text{where }m_{j,c}=sigmoid(-\gamma_c(\widetilde{d}_{j,c}-\beta_c))
+$$
+
+目前meta learning研究最多的任务是few shot问题，半监督学习目前只有[7]在这方面做了工作，作者很好得利用聚类的思想在[2]上做了改进，从实验效果上也取得了3个百分点的提高。
