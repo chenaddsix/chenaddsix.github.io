@@ -7,7 +7,7 @@ header-img: "img/post-bg-2015.jpg"
 author: "Jiale Chen"
 catalog: true
 tags:
-  - Machine Learning
+  - Mechine Learning
 ---
 
 <script type="text/javascript" async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
