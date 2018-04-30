@@ -252,10 +252,14 @@ $$
 综上，强化学习因为训练样本需求大，而meta learning在解决小样本训练上有显著的成功，所以考虑将两者结合，但是目前强化学习与meta learning结合还处于起步阶段，都在gym环境或者自己定义的简单环境上进行测试。强化学习与meta learning结合主要有三种任务：(1)对于任意强化学习；(2)对于同一个任务设置不同参数，构造一个任务簇；(3)动态环境或者竞争环境。结合的基本思想也是迫使强化学习agent的权值不要在一个任务上拟合，而是拟合到一个在更多任务上有泛化能力的权值上。
 
 ### Reference
-1.[Matching Networks for One Shot Learning](https://arxiv.org/abs/1606.04080) [[code1](https://github.com/gitabcworld/MatchingNetworks),[code2](https://github.com/AntreasAntoniou/MatchingNetworks)]
-2.[Prototypical Networks for Few-shot Learning](https://arxiv.org/abs/1703.05175) [[code](https://github.com/orobix/Prototypical-Networks-for-Few-shot-Learning-PyTorch)]
-3.[Learning to learn by gradient descent by gradient descent](https://arxiv.org/abs/1606.04474)
-4.[Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks](https://arxiv.org/abs/1703.03400) [[code1](https://github.com/cbfinn/maml),[code2](https://github.com/cbfinn/maml_rl)]
+1.[Matching Networks for One Shot Learning](https://arxiv.org/abs/1606.04080) [[code1](https://github.com/gitabcworld/MatchingNetworks),[code2](https://github.com/AntreasAntoniou/MatchingNetworks)]  
+
+2.[Prototypical Networks for Few-shot Learning](https://arxiv.org/abs/1703.05175) [[code](https://github.com/orobix/Prototypical-Networks-for-Few-shot-Learning-PyTorch)]  
+
+3.[Learning to learn by gradient descent by gradient descent](https://arxiv.org/abs/1606.04474)  
+
+4.[Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks](https://arxiv.org/abs/1703.03400) [[code1](https://github.com/cbfinn/maml),[code2](https://github.com/cbfinn/maml_rl)]  
+
 5.[Meta-Learning with Memory-Augmented Neural Networks](http://proceedings.mlr.press/v48/santoro16.html)[[code](https://github.com/ywatanabex/ntm-meta-learning)]
 6.[Learning to Remember Rare Events](https://arxiv.org/abs/1703.03129) [[code1](https://github.com/mveres01/Theano-LtRRE),[code2](https://github.com/himani-arora/learning_to_remember_rare_events)]
 7.[Meta-Learning for Semi-Supervised Few-Shot Classification](https://arxiv.org/abs/1803.00676)
