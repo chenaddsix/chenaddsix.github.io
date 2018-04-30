@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Reinforcement Learning Algorithm 1:Prioritized Experience Replay
-subtitle:   "\"Prioritized Experience Replay.\""
+title: Investigation on Meta Learning
+subtitle:   "\"Investigation on Meta Learning.\""
 date: 2018-04-14
 header-img: "img/post-bg-2015.jpg"
 author: "Jiale Chen"
 catalog: true
 tags:
-  - Reinforcement Learning
+  - Machine Learning
 ---
 
 <script type="text/javascript" async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
