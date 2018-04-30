@@ -146,6 +146,43 @@ $$
 <center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_12.png"  alt=" " width="50%"/>  </center>
 <center>Fig 8. The comparision of the prototypes. </center>
 
+- **soft K-Means with cluster**
+soft k-means虽然将未标注数据也利用上了，但是未标注的数据类别并不一定存在于训练数据类别中，我们称这种类别为distractor class，那么按照soft k-means的做法就会污染其他正确类别的中心估计。为了处理这种情况，作者认为distractor class类别中心始终在原点：
+
+$$
+p_c=\begin{cases}\frac{\sum_i h(x_i)z_{i,c}}{\sum_i z_{i,c}} & \text{for }c=1...N\\0 & \text{for }c=N+1\end{cases}
+$$
+
+此外再考虑引进类别半径表示类内样本的不一致性（为了方便起见，标注类别半径$r_{1,\cdots,N}=1$，只学习无标注样本类别半径$r_{N+1}$。
+
+$$
+\widetilde{z}_{j,c}=\frac{exp(-\frac{1}{r_c^2}||\widetilde{x}_j-p_c||^2_2-A(r_c))}{\sum_{c'}exp(-\frac{1}{r_{c'}^2}||\widetilde{x}_j-p_{c'}||^2_2-A(r_{c'}))}, \text{where }A(r)=\frac{1}{2}log(2\pi)+log(r)
+$$
+
+- **masked soft K-Means**
+
+在soft K-Means with cluster中，所有的distractor class都被看作同一类，这显然是不合理的，作者利用了mask的思想，也就是说未标注数据对于不同类别的中心计算贡献应该有所区别，而这个区别作者利用一个全连接网络来学习。
+
+定义样本$\tilde{x}_j$到类别$c$的距离：
+
+$$
+\widetilde{d}_{j,c}=\frac{d_{j,c}}{\frac{1}{M}\sum_j d_{j,c}}, \text{where }d_{j,c}=||h(\widetilde{x}_j)-p_c||^2_2
+$$
+
+另外再用MLP学习两个阈值$\beta_c,\gamma_c$
+
+$$
+[\beta_c,\gamma_c]=MLP\left(\left[min_j(\widetilde{d}_{j,c}),max_j(\widetilde{d}_{j,c}), var_j(\widetilde{d}_{j,c}),skew_j(\widetilde{d}_{j,c}),kurt_j(\widetilde{d}_{j,c})\right]\right)
+$$
+
+然后是聚类中心的更新公式：
+
+$$
+\widetilde{p}_c=\frac{\sum_i h(x_i)z_{i,c}+\sum_j h(\widetilde{x}_j)\widetilde{z}_{j,c}m_{j,c}}{\sum_i z_{i,c}+\sum_j\widetilde{z}_{j,c}m_{j,c}},\text{where }m_{j,c}=sigmoid(-\gamma_c(\widetilde{d}_{j,c}-\beta_c))
+$$
+
+目前meta learning研究最多的任务是few shot问题，半监督学习目前只有[7]在这方面做了工作，作者很好得利用聚类的思想在[2]上做了改进，从实验效果上也取得了3个百分点的提高。
+
 ### Reinforcement Learning
 
 强化学习领域最大的问题是训练难度大，目前在不同强化学习问题上都需要重新训练网络，这为强化学习投入实际应用，例如无人驾驶等需要快速适应的场景带来难度，而元学习在快速学习方面有独特的优势，所以近年开始出现元学习与强化学习的结合。
