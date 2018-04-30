@@ -153,7 +153,7 @@ $$
 soft k-means虽然将未标注数据也利用上了，但是未标注的数据类别并不一定存在于训练数据类别中，我们称这种类别为distractor class，那么按照soft k-means的做法就会污染其他正确类别的中心估计。为了处理这种情况，作者认为distractor class类别中心始终在原点：
 
 $$
-p_c=\begin{cases}\frac{\sum_i h(x_i)z_{i,c}}{\sum_i z_{i,c}} & \text{for }c=1,\cdots,N & \text{for }c=N+1\end{cases}
+p_c=\begin{cases}\frac{\sum_i h(x_i)z_{i,c}}{\sum_i z_{i,c}} & \text{for }c=1...N & \text{for }c=N+1\end{cases}
 $$
 
 此外再考虑引进类别半径表示类内样本的不一致性（为了方便起见，标注类别半径$$r_{1,\cdots,N}=1$$，只学习无标注样本类别半径$$r_{N+1}$$。
