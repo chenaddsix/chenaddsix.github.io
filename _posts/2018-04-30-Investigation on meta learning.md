@@ -142,7 +142,7 @@ $$
 在[2]中其实可以看作计算所有同类别的中心，那么对于未标注数据并未利用，如下图。所以作者利用以下公式，将未标注数据也纳入考虑。
 
 $$
-p_c=\frac{\sum_i h(x_i) z_{i,c} + \sum_j h(\tilde{x}_j) \tilde{z}_{j,c}}{\sum_i z_{i,c}+\sum_j \tilde{z}_{j,c}},\tilde{z}_{i,c}=\frac{exp}{\sum_{c'}exp}
+p_c=\frac{\sum_i h(x_i) z_{i,c} + \sum_j h(\tilde{x}_j) \tilde{z}_{j,c}}{\sum_i z_{i,c}+\sum_j \tilde{z}_{j,c}},\tilde{z}_{i,c}=\frac{exp(-\left \| h(\tilde{x}_j)-p_c \right \|_2^2)}{\sum_{c'}exp}
 $$
 
 <center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_12.png"  alt=" " width="50%"/>  </center>
