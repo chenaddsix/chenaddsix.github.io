@@ -142,7 +142,7 @@ $$
 在[2]中其实可以看作计算所有同类别的中心，那么对于未标注数据并未利用，如下图。所以作者利用以下公式，将未标注数据也纳入考虑。
 
 $$
-p_c=\frac{\sum_i h(x_i) z_{i,c} + \sum_j h(\tilde{x}_j) \tilde{z}_{j,c}}{\sum_i z_{i,c}+\sum_j \tilde{z}_{j,c}}
+p_c=\frac{\sum_i h(x_i) z_{i,c} + \sum_j h(\tilde{x}_j) \tilde{z}_{j,c}}{\sum_i z_{i,c}+\sum_j \tilde{z}_{j,c}},\tilde{z}_{i,c}=\frac{exp}{\sum_{c'}exp}
 $$
 
 <center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_12.png"  alt=" " width="50%"/>  </center>
@@ -260,17 +260,17 @@ $$
 4.[Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks](https://arxiv.org/abs/1703.03400) [[code1](https://github.com/cbfinn/maml),[code2](https://github.com/cbfinn/maml_rl)]  
 5.[Meta-Learning with Memory-Augmented Neural Networks](http://proceedings.mlr.press/v48/santoro16.html)[[code](https://github.com/ywatanabex/ntm-meta-learning)]  
 6.[Learning to Remember Rare Events](https://arxiv.org/abs/1703.03129) [[code1](https://github.com/mveres01/Theano-LtRRE),[code2](https://github.com/himani-arora/learning_to_remember_rare_events)]  
-7.[Meta-Learning for Semi-Supervised Few-Shot Classification](https://arxiv.org/abs/1803.00676)
-8.[Continuous Adaptation via Meta-Learning in Nonstationary and Competitive Environments](https://arxiv.org/abs/1710.03641)
-9.[Actor-Mimic: Deep Multitask and Transfer Reinforcement Learning](https://arxiv.org/abs/1511.06342)
-10.[Meta Reinforcement Learning with Latent Variable Gaussian Processes](https://arxiv.org/abs/1803.07551)
-11.[Learning Neural Network Policies with Guided Policy Search under Unknown Dynamics](https://papers.nips.cc/paper/5444-learning-neural-network-policies-with-guided-policy-search-under-unknown-dynamics)
-12.[Learning to Optimize](https://arxiv.org/abs/1606.01885)
-13.[Using Fast Weights to Attend to the Recent Past](https://arxiv.org/abs/1610.06258)
-14.[HyperNetworks](https://arxiv.org/abs/1609.09106)
-15.[Optimization as a Model for Few-Shot Learning](http://pdfs.semanticscholar.org/149b/d70a173b24eba3f6514a7e587bda815ec7f0.pdf) [[code](https://github.com/gitabcworld/FewShotLearning)]
-16.[Siamese neural networks for one-shot image recognition](https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf)
-17.[Neural Turing Machines](https://arxiv.org/abs/1410.5401)
-18.[Low-shot Visual Recognition by Shrinking and Hallucinating Features](https://arxiv.org/abs/1606.02819)
-19.[Learning to reinforcement learn](https://arxiv.org/abs/1611.05763)[[code](https://github.com/awjuliani/Meta-RL)]
+7.[Meta-Learning for Semi-Supervised Few-Shot Classification](https://arxiv.org/abs/1803.00676)  
+8.[Continuous Adaptation via Meta-Learning in Nonstationary and Competitive Environments](https://arxiv.org/abs/1710.03641)  
+9.[Actor-Mimic: Deep Multitask and Transfer Reinforcement Learning](https://arxiv.org/abs/1511.06342)  
+10.[Meta Reinforcement Learning with Latent Variable Gaussian Processes](https://arxiv.org/abs/1803.07551)  
+11.[Learning Neural Network Policies with Guided Policy Search under Unknown Dynamics](https://papers.nips.cc/paper/5444-learning-neural-network-policies-with-guided-policy-search-under-unknown-dynamics)  
+12.[Learning to Optimize](https://arxiv.org/abs/1606.01885)  
+13.[Using Fast Weights to Attend to the Recent Past](https://arxiv.org/abs/1610.06258)  
+14.[HyperNetworks](https://arxiv.org/abs/1609.09106)  
+15.[Optimization as a Model for Few-Shot Learning](http://pdfs.semanticscholar.org/149b/d70a173b24eba3f6514a7e587bda815ec7f0.pdf) [[code](https://github.com/gitabcworld/FewShotLearning)]  
+16.[Siamese neural networks for one-shot image recognition](https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf)  
+17.[Neural Turing Machines](https://arxiv.org/abs/1410.5401)  
+18.[Low-shot Visual Recognition by Shrinking and Hallucinating Features](https://arxiv.org/abs/1606.02819)  
+19.[Learning to reinforcement learn](https://arxiv.org/abs/1611.05763)[[code](https://github.com/awjuliani/Meta-RL)]  
 20.[GitHub - floodsung/Meta-Learning-Papers: Meta Learning / Learning to Learn / One Shot Learning / Few Shot Learning](https://github.com/floodsung/Meta-Learning-Papers)
