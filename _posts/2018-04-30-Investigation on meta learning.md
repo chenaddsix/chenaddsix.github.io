@@ -198,7 +198,7 @@ $$
 L^i_{policy}(\theta)=\sum_{a\in A_{E_i}} \pi_{E_i}(a \min s)log \pi_{AMN}(a|s;\theta)
 $$
 
-其中$$\pi_{AMN}(a|s;\theta)$$为Multitask Actor-Mimic Network的策略，这个$$\theta$$为学习多任务共通性的参数。
+其中$$\pi_{AMN}(a \min s;\theta)$$为Multitask Actor-Mimic Network的策略，这个$$\theta$$为学习多任务共通性的参数。
 
 另外一个部分是对于不同任务的适应网络，其中$$h_{AMN}$$和$$h_{E_i}$$是全连接网络的输出，对于第$$i$$个任务由网络$$f_i$$来学习$$\theta$$到$$\theta_i$$的映射，$$\theta_i$$是第$$i$$个任务的参数。
 
