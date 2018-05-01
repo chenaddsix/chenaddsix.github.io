@@ -195,7 +195,7 @@ $$
 16年ICLR上[9]从网络优化目标的角度，希望一个agent能够学习多个学习任务的策略，即学习不同任务之间的共通点。首先，对于第$$i$$个任务$$E_i$$的policy objective为如下形式：
 
 $$
-L^i_{policy}(\theta)=\sum_{a\in A_{E_i}} \pi_{E_i}(a|s)log \pi_{AMN}(a|s;\theta)
+L^i_{policy}(\theta)=\sum_{a\in A_{E_i}} \pi_{E_i}(a \min s)log \pi_{AMN}(a|s;\theta)
 $$
 
 其中$$\pi_{AMN}(a|s;\theta)$$为Multitask Actor-Mimic Network的策略，这个$$\theta$$为学习多任务共通性的参数。
