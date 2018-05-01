@@ -119,7 +119,7 @@ Meta Learning领域一种基于记忆增强神经网络的方法，这种方法�
 
 另外一篇很重要的记忆增强神经网络的论文[6]获得了17ICLR的oral，作者是李飞飞的学生。作者提出了一种用于深度学习的大规模终身记忆模块，利用了快速最近邻算法加快了查询效率。一个新的样本出现，先在memory中找到最近邻特征，如果类别不同，就在存放最久的样本中随机选取一个位置存放新的样本特征，因为这个样本更加rare；如果类别相同，则合并两个特征。具体做法如Fig 7。
 
-<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_9.png"  alt=" " width="70%"/>  </center>
+<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_9.png"  alt=" " width="80%"/>  </center>
 <center>Fig 7. The operation of the memory module on a query q with correct value v. </center>
 
 综上，[5]是记忆增强网络这few shot问题上的首次应用，论文创新性很高，直接将网络的记忆功能用一个可查询的存储结构代替。[6]在这个基础上对速度，匹配方法做了改进。这种方法的优势是可解释性比较强，网络的记忆部分不再只由LSTM的参数拟合，但缺点就是维护一个很大的memory在某些问题上成本很高，对速度要求高的场景也很难适应。
@@ -227,7 +227,7 @@ $$
 
 强化学习一般都是针对某特定环境训练一个策略模型，而实际应用中有很多环境在随时间改变的情况，即Nonstationary Environment。18ICLR上openai的论文[8]利用meta learning解决在非静态环境和竞争环境上的强化学习问题，并获得了best paper。在非静态环境上应用强化学习主要的难点是非静态环境不能像静态环境一样提供充足的样本供强化学习训练，所以强化学习模型必须迅速适应环境变化，而[4]在强化学习优化上已经做了一定的改进，[8]将MAML框架扩展到连续变化的环境上，如下图所示，(a)是MAML的结构，MAML只对第一步做更新，(b)为作者的模型，可以看出策略和任务都是连续变化的。
 
-<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_14.png"  alt=" " width="70%"/>  </center>
+<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_14.png"  alt=" " width="80%"/>  </center>
 
 作者将强化学习的reward取反作为MAML中的loss function $$L_T(\tau):=-\sum_{t=1}^H R_t$$，在连续非静态环境中，问题转化为优化：
 
@@ -248,7 +248,7 @@ $$
 $$
 而$$\phi_i^0 := \theta$$，实际上，在训练中，作者每一步使用的都是$$\theta$$，原因是有利于收敛，具体算法如下：
 
-<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_13.png"  alt=" " width="70%"/>  </center>
+<center> <img src="https://calebchen-1256449519.cos.ap-guangzhou.myqcloud.com/18.04/Investigation_meta_learning_13.png"  alt=" " width="80%"/>  </center>
 
 可以看出算法的目标是学习最优的初始化策略参数$$\theta^*$$和做某非静态环境下的$$\alpha^*$$，而在执行阶段，是通过检测是否有新的任务到来决定是否转化策略的，也就是说对于环境的变化仍然由作者控制的，$$\theta*,\alpha*$$为某种特定变化下的最优，而不是自适应得对所有的环境变化作出反应。
 
