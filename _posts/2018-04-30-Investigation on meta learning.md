@@ -259,7 +259,7 @@ $$
 2.[Prototypical Networks for Few-shot Learning](https://arxiv.org/abs/1703.05175) [[code](https://github.com/orobix/Prototypical-Networks-for-Few-shot-Learning-PyTorch)]  
 3.[Learning to learn by gradient descent by gradient descent](https://arxiv.org/abs/1606.04474) [[code](https://github.com/deepmind/learning-to-learn)]  
 4.[Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks](https://arxiv.org/abs/1703.03400) [[code1](https://github.com/cbfinn/maml),[code2](https://github.com/cbfinn/maml_rl)]  
-5.[Meta-Learning with Memory-Augmented Neural Networks](http://proceedings.mlr.press/v48/santoro16.html) [[code](https://github.com/ywatanabex/ntm-meta-learning)]  
+5.[Meta-Learning with Memory-Augmented Neural Networks](http://proceedings.mlr.press/v48/santoro16.html) [[code1](https://github.com/ywatanabex/ntm-meta-learning),[code2](https://github.com/hmishra2250/NTM-One-Shot-TF)]  
 6.[Learning to Remember Rare Events](https://arxiv.org/abs/1703.03129) [[code1](https://github.com/mveres01/Theano-LtRRE),[code2](https://github.com/himani-arora/learning_to_remember_rare_events)]  
 7.[Meta-Learning for Semi-Supervised Few-Shot Classification](https://arxiv.org/abs/1803.00676) [[code](https://github.com/renmengye/few-shot-ssl-public)]  
 8.[Continuous Adaptation via Meta-Learning in Nonstationary and Competitive Environments](https://arxiv.org/abs/1710.03641)  
@@ -274,4 +274,5 @@ $$
 17.[Neural Turing Machines](https://arxiv.org/abs/1410.5401)  
 18.[Low-shot Visual Recognition by Shrinking and Hallucinating Features](https://arxiv.org/abs/1606.02819)  
 19.[Learning to reinforcement learn](https://arxiv.org/abs/1611.05763)[[code](https://github.com/awjuliani/Meta-RL)]  
-20.[GitHub - floodsung/Meta-Learning-Papers: Meta Learning / Learning to Learn / One Shot Learning / Few Shot Learning](https://github.com/floodsung/Meta-Learning-Papers)
+20.[Learning to Compare: Relation Network for Few-Shot Learning](https://arxiv.org/abs/1711.06025) [[code](https://github.com/floodsung/LearningToCompare_FSL)]  
+21.[GitHub - floodsung/Meta-Learning-Papers: Meta Learning / Learning to Learn / One Shot Learning / Few Shot Learning](https://github.com/floodsung/Meta-Learning-Papers)
